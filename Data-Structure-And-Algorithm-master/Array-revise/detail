@@ -1,0 +1,4 @@
+==> [1,2,3,4,5]  
+rotate(arr,arr+2,arr+n);
+--> from position 2 to end make starting 
+--> after rotating [3,4,5,1,2];
