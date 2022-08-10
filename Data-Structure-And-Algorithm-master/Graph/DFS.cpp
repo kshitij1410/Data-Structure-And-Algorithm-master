@@ -82,6 +82,7 @@ int main()
     addEdge(adj, 5, 6);
     addEdge(adj, 1, 2);
     addEdge(adj, 2, 3);
+    
     // printAdjacency(adj, v);
     cout << endl;
     DFS(adj, 0, v);
