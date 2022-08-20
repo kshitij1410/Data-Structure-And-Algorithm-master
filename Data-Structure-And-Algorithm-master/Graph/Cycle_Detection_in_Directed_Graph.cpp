@@ -87,14 +87,14 @@ bool cycleDetectionHepler2(vector<int> adj[], vector<bool> visited2, vector<bool
             if(visited2[nbr]==true) return true;
         }
     }
-
+    visited2[src]=false;
     return false;
 }
 
 bool cycleDetect2(vector<int> adj[], int v)
 {
     vector<bool> visited1;
-    vector<bool> visited2;
+    vector<bool> visited2; 
     //int visited1[v];
     //memset(visited1,0,sizeof visited1);
     for (int i = 0; i < v; i++)

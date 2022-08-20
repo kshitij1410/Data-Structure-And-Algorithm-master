@@ -70,6 +70,10 @@ bool checkBiPartite(vector<int> adj[], int v)
     return true;
 }
 
+//method 2:
+// calcualte the cycle length if it is even then graph is bipartite or if not then not a bipartite graph
+//time complexity -- O(n*n)
+
 int main()
 {
     int v = 9;
