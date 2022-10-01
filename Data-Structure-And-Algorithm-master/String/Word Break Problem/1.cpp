@@ -114,3 +114,62 @@ int flag=0;
       return solve(A,B,0,n-1);
     }
 */
+
+class Solution
+{
+public:
+    int dp[300];
+
+    bool solve(string s, unordered_set<string> st, int i)
+    {
+        if (s.size() == i)
+            return 1;
+
+        if (dp[i] != -1)
+            return dp[i];
+
+        string temp = "";
+        for (int k = i; k < s.size(); k++)
+        {
+            temp += s[k];
+            if (st.find(temp) != st.end())
+            {
+                if (solve(s, st, k + 1) == true)
+                    return dp[i] = 1;
+            }
+        }
+        return dp[i] = 0;
+    }
+
+    bool wordBreak(string s, vector<string> &wordDict)
+    {
+        unordered_set<string> st(wordDict.begin(), wordDict.end());
+        memset(dp, -1, sizeof(dp));
+        return solve(s, st, 0);
+    }
+};
+
+class Solution
+{
+public:
+    bool wordBreak(string s, vector<string> &wordDict)
+    {
+        set<string> word_set(wordDict.begin(), wordDict.end());
+        vector<bool> dp(s.length() + 1);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.length(); i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (dp[j] and
+                    word_set.find(s.substr(j, i - j)) != word_set.end())
+                {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+};

@@ -24,20 +24,37 @@ string lock(string X, int id)
 {
     if (isLocked.find(X) != isLocked.end())
         return "false";
-    if (lockedChildList[X].size() > 0)
+    isLocked[X] = id;
+    
+    // descandts
+     if (lockedChildList[X].size() > 0)
         return "false";
-    int i = indexOf[X];
+    
+
+    // int i = indexOf[X];
+    int i = getParent(indexOf[X]);
     while (i != -1)
-    { 
-        //check for ancestor 
-        if (isLocked.find(node[i]) != isLocked.end())
+    {
+        
+        auto pos = lockedChildList[node[i]].find(X);
+        // check for ancestor
+        if (isLocked.find(node[i]) != isLocked.end() || ((*pos)==X) )
+        {
+             unlock(X,id);
             return "false";
+        }
+           
+        
+        lockedChildList[node[i]].insert(X);
         i = getParent(i);
     }
+
+    unlock(X,id);
+
     i = getParent(indexOf[X]);
     while (i != -1)
     {
-        //store all descentor whose has blocked  
+        // store all descentor whose has blocked
         lockedChildList[node[i]].insert(X);
         i = getParent(i);
     }
@@ -68,6 +85,7 @@ string unlock(string X, int id)
     int i = getParent(indexOf[X]);
     while (i != -1)
     {
+        if(lockedChildList[node[i]].find(X)!=lockedChildList[node[i]].end())
         lockedChildList[node[i]].erase(X);
         i = getParent(i);
     }
@@ -94,10 +112,10 @@ string upgradeLock(string X, int id)
         ids.insert(isLocked[(*it)]);
     }
 
-    //subtree is not locked by same id
+    // subtree is not locked by same id
     if (ids.size() > 1)
         return "false";
-    if (ids.size() == 0)  //no descendant is present
+    if (ids.size() == 0) // no descendant is present
     {
         return "false";
     }
@@ -110,7 +128,7 @@ string upgradeLock(string X, int id)
     {
         unlock((*it), id);
     }
-    unlock(X, id);
+    // unlock(X, id);
     return lock(X, id);
 }
 
@@ -150,5 +168,5 @@ int main()
         }
     }
 
-        return 0;
+    return 0;
 }

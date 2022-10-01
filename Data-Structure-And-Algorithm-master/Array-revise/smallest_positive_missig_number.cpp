@@ -46,7 +46,7 @@ public:
 
 // { Driver Code Starts.
 
-int missingNumber(int arr[], int n);
+// int missingNumber(int arr[], int n);
 
 int main()
 {

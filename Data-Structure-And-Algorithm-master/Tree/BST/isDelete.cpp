@@ -96,3 +96,58 @@ int main()
      inOrder(root);
     return 0;
 }
+
+// TreeNode* getPrecdor(TreeNode *root)
+//     {
+//         while(root!=NULL and root->right!=NULL)
+//         {
+//             root=root->right;
+//         }
+        
+        
+//         return root;
+//     }
+    
+    
+//     TreeNode* deleteNode(TreeNode* root, int key) {
+        
+//         if(root==NULL) return NULL;
+//         if(root->val < key)
+//         {
+//             root->right = deleteNode(root->right,key);
+//         }
+//         else if(root->val > key)
+//         {
+//             root->left = deleteNode(root->left,key);
+//         }
+//         else
+//         {
+//             //eaf node eft and right nu
+//             if(root->left==NULL)
+//             {
+//                 TreeNode * temp = root->right;
+//                 delete root;
+//                 return temp;
+//             }
+//             else if(root->right == NULL)
+//             {
+//                TreeNode * temp = root->left;
+//                 delete root;
+//                 return temp;
+//             }
+//             else
+//             {
+                
+//                 // left and right not null
+//                 // so lets fing inorder predecor
+//                 TreeNode * temp = getPrecdor(root->left);
+                
+//                   root->val=temp->val;
+//                  root->left = deleteNode(root->left,temp->val);
+                
+//             }
+//         }
+        
+//         return root;
+//     }
+// };

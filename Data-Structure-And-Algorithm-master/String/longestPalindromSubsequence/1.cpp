@@ -48,6 +48,15 @@ void solve(string x, string y)
         }
     }
 
+    for(int i=0;i<=n;i++)
+    {
+        for(int j=0;j<=m;j++)
+        {
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+
     int ans = dp[n][m];
     dp.clear();
     cout << ans;
@@ -83,6 +92,7 @@ void solve1(string x, string y)
         prev = curr;
     }
 
+
     int ans = prev[m];
     prev.clear();
     curr.clear();
@@ -98,8 +108,8 @@ int main()
     int n = Y.size();
     // vector<vector<int> > dp(m + 1, vector<int>(n + 1, -1));
     // cout << "Length of LCS is " << lcs(X, Y, m, n, dp);
-    cout << lcs(X, Y, m, n);
-    solve1(X, Y);
+    // cout << lcs(X, Y, m, n);
+    // solve1(X, Y);
     solve(X, Y);
     return 0;
 }
