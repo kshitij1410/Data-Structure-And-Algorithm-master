@@ -1,77 +1,82 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int maxDistance(vector<pair<int, int>> adj[], int v, int src)
+class Factory
 {
-    // dist,node
-    vector<int>dist(v+1,INT_MIN);
+private:
+    int name;
+    int day;
+    int in, out;
 
-    priority_queue<pair<int, int>> pq;
-    dist[src] = 0;
-    pq.push({0, src});
+public:
+    unordered_map<string, vector<vector<int>>> info;
+    unordered_map<string, vector<vector<int>>> data;
 
-    while (!pq.empty())
+    void addInfo(string name, int day, int in, int out)
     {
-        int nodeDis = pq.top().first;
-        int nodeVal = pq.top().second;
-        pq.pop();
-        for (auto nbr : adj[nodeVal])
+        info[name].push_back({day, in, out});
+    }
+
+    void InsertData()
+    {
+        for (auto ele : info)
         {
-            int temp1 = nbr.first;  // nodeval
-            int temp2 = nbr.second; // node dis
-            if (dist[temp1] == INT_MAX)
+            int sum = 0;
+            int red = 0;
+            int green = 0;
+            string name = ele.first;
+            for (int i = 0; i < 5; i++)
             {
-                int val = nodeDis + temp2;
-                pq.push({val, temp1});
+                int d = ele.second[i][0];
+                int k = ele.second[i][1];
+                int f = ele.second[i][2];
+                int in_hour = k / 100;
+                int in_min = k % 100;
+                int out_hour = f / 100;
+                int out_min = f % 100;
+
+                int temp = out_hour * 60 + out_min - in_hour * 60 - in_min;
+                if (temp >= 540)
+                    green++;
+                else
+                    red++;
+                sum += temp;
             }
 
-            dist[temp1] = max(nodeDis + temp2, dist[temp1]);
+            int average = sum / 5;
+            string temp = "";
+
+            if (red == 0)
+                temp = "High";
+            else if (red == 1 or red == 2)
+                temp = "Neutral";
+            else
+            {
+                temp = "low";
+            }
+
+            data[name].push_back({average, red, green});
         }
     }
 
-   int ans=0;
-   for(int i=0;i<dist.size();i++)
-   {
-     if(ans<dist[i])
-     {
-        ans=dist[i];
-     }
-   }
-
-   return ans;
-
-}
-
-void addEdge(vector<pair<int, int>> adj[], int u, int v, int wei)
-{
-    adj[u].push_back({v, wei});
-    adj[v].push_back({u, wei});
-}
-
-
-int solve(int n, int m,vector<int>a,vector<int>x,vector<int>y)
-{    
-
-    vector<pair<int, int>> adj[m];
-    for(int i=0;i<x.size();i++)
+    void flag()
     {
-        addEdge(adj, x[i], y[i], a[x[i]-1]-a[y[i]-1]);
     }
-   
-    return maxDistance(adj,n, 1);
-
-  
-
-}
+};
 
 int main()
 {
-    int n;
-    cin>>n;
-    int arr[n];
-    for(int i=0;i<n;i++) cin>>arr[i];
-
-    printlIS(arr,n);
+    int no_of_student = 5;
+    int no_of_days = 5;
+    for (int i = 0; i < 5; i++)
+    {
+        Factory obj;
+        string name;
+        int day, in, out;
+        cin >> name >> day >> in >> out;
+        obj.addInfo(name, day, in, out);
+    }
+    Factory obj;
+    obj.InsertData();
     return 0;
 }
-
