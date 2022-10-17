@@ -10,7 +10,7 @@ void addEdge(vector<vector<int>> adj[], int u, int v, int wei)
 
 // calculate shortest distance using bfs
 
-// only bfs not work we have to use dijkistra algorithm
+//only bfs not work we have to use dijkistra algorithm
 
 vector<int> dijkstra(int n, vector<vector<int>> g[], int source)
 {
@@ -38,7 +38,7 @@ vector<int> dijkstra(int n, vector<vector<int>> g[], int source)
 
     return distTo;
 }
- 
+
 int main()
 {
     int v = 5;
