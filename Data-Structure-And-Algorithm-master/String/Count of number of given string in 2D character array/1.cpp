@@ -1,57 +1,69 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ARRAY_SIZE(a) (sizeof(a) / sizeof(*a))
-int found=0;
 
-int solve(string pat, string input[], int i, int j, int n, int m, int idx)
+class Solution
 {
-    int ans = 0;
-    if (i >= 0 and i < n and j >= 0 and j < m and pat[idx] == input[i][j])
+public:
+    int res = 0;
+    void solve(vector<vector<char>> &mat, string target, int i, int j, int r, int c, int idx)
     {
-        int len = pat.size();
-        char temp = input[i][j];
-        input[i][j] = 0;
-        if (idx + 1 == len)
+        if (i >= 0 and i < r and j >= 0 and j < c and target[idx] == mat[i][j])
         {
-            found = 1;
+            char temp = mat[i][j];
+            if (idx + 1 == target.size())
+                res++;
+            mat[i][j] = '0';
+
+            solve(mat, target, i - 1, j, r, c, idx + 1);
+            solve(mat, target, i, j - 1, r, c, idx + 1);
+            solve(mat, target, i, j + 1, r, c, idx + 1);
+            solve(mat, target, i + 1, j, r, c, idx + 1);
+
+            mat[i][j] = temp;
         }
         else
-        {
-            // left
-            found + = solve(pat, input, i, j - 1, n, m, idx + 1);
-            found += solve(pat, input, i, j + 1, n, m, idx + 1);  // right
-            found + = solve(pat, input, i - 1, j, n, m, idx + 1); // top
-            found += solve(pat, input, i + 1, j, n, m, idx + 1);  // bottom
-        }
-        input[i][j] = temp;
+            return;
     }
-    return found;
-}
-
-int searchword(string needle, string input[])
-{
-    int n = sizeof(input) / sizeof(input[0]);
-    int m = input[0].size();
-    int ans = 0;
-    for (int row = 0; row < n; row++)
+    int findOccurrence(vector<vector<char>> &mat, string target)
     {
-        for (int col = 0; col < m; col++)
+        int r = mat.size();
+        int c = mat[0].size();
+        int ans = 0;
+        for (int i = 0; i < r; i++)
         {
-            ans += solve(needle, input, row, col, n, m, 0);
+            for (int j = 0; j < c; j++)
+            {
+                res = 0;
+                solve(mat, target, i, j, r, c, 0);
+                ans += res;
+            }
         }
+        return ans;
     }
-    return ans;
-}
+};
+
+
 
 int main()
 {
-    string needle = "MAGIC";
-    string input[] = {"BBABBM",
-                      "CBMBBA",
-                      "IBABBG",
-                      "GOZBBI",
-                      "ABBBBC",
-                      "MCIGAM"};
-
-    return 0;
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int R, C;
+        cin >> R >> C;
+        vector<vector<char>> mat(R);
+        for (int i = 0; i < R; i++)
+        {
+            mat[i].resize(C);
+            for (int j = 0; j < C; j++)
+                cin >> mat[i][j];
+        }
+        string target;
+        cin >> target;
+        Solution obj;
+        cout << obj.findOccurrence(mat, target) << endl;
+    }
 }
+
+// } Driver Code Ends

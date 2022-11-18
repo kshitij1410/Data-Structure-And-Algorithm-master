@@ -21,6 +21,7 @@ address with this string.
 
 
 */
+
 void solve(string s, int i, int j, int level, string ans, vector<string> &res)
 {
 
